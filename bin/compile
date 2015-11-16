@@ -1,0 +1,26 @@
+#!/bin/sh
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+echo "-----> Install ffmpeg (with LAME support)"
+BUILD_DIR=$1
+VENDOR_DIR="vendor"
+FFMPEG_DOWNLOAD_URL="https://github.com/jayzes/heroku-buildpack-ffmpeg/releases/download/git-2013-08-02-b3f858b/ffmpeg.tar.gz"
+LAME_DOWNLOAD_URL="https://github.com/jayzes/heroku-buildpack-ffmpeg/releases/download/git-2013-08-02-b3f858b/mp3lame.tar.gz"
+
+echo "FFMPEG_DOWNLOAD_URL = " $FFMPEG_DOWNLOAD_URL | indent
+echo "LAME_DOWNLOAD_URL = " $LAME_DOWNLOAD_URL | indent
+
+cd $BUILD_DIR
+mkdir -p $VENDOR_DIR
+cd $VENDOR_DIR
+curl -L --silent $FFMPEG_DOWNLOAD_URL | tar xz
+curl -L --silent $LAME_DOWNLOAD_URL | tar xz
+
+echo "exporting PATH and LIBRARY_PATH" | indent
+PROFILE_PATH="$BUILD_DIR/.profile.d/ffmpeg_lame.sh"
+mkdir -p $(dirname $PROFILE_PATH)
+echo 'export PATH="$PATH:vendor/ffmpeg/bin:vendor/mp3lame/bin"' >> $PROFILE_PATH
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:vendor/ffmpeg/lib:vendor/mp3lame/lib"' >> $PROFILE_PATH
