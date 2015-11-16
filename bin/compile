@@ -7,7 +7,7 @@ indent() {
 echo "-----> Install ffmpeg (with LAME support)"
 BUILD_DIR=$1
 VENDOR_DIR="vendor"
-FFMPEG_DOWNLOAD_URL="https://github.com/jayzes/heroku-buildpack-ffmpeg/releases/download/git-2013-08-02-b3f858b/ffmpeg.tar.gz"
+FFMPEG_DOWNLOAD_URL="http://flect.github.io/heroku-binaries/libs/ffmpeg.tar.gz"
 LAME_DOWNLOAD_URL="https://github.com/jayzes/heroku-buildpack-ffmpeg/releases/download/git-2013-08-02-b3f858b/mp3lame.tar.gz"
 
 echo "FFMPEG_DOWNLOAD_URL = " $FFMPEG_DOWNLOAD_URL | indent
